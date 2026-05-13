@@ -55,9 +55,10 @@ header {
 }
 
 header.scrolled {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 10px var(--shadow-color);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #000;
 }
 
 .navbar {
@@ -145,41 +146,77 @@ header.scrolled {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: 80px;
-    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    padding-top: 100px;
+    background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%);
+    position: relative;
+    overflow: hidden;
 }
 
-.hero-container {
-    height: 100%;
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(var(--primary-color) 0.5px, transparent 0.5px);
+    background-size: 30px 30px;
+    opacity: 0.05;
+    z-index: 0;
+    animation: patternMove 60s linear infinite;
 }
 
+@keyframes patternMove {
+    from { background-position: 0 0; }
+    to { background-position: 500px 500px; }
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+    opacity: 0.2;
+    z-index: 0;
+    filter: blur(80px);
+}
 .hero-content {
     display: flex;
-    height: 100%;
     align-items: center;
-    gap: 50px;
+    gap: 60px;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-right {
     flex: 1;
+    position: relative;
+    z-index: 2;
 }
 
 .hero-left {
     flex: 1;
     position: relative;
-    height: 550px;
+    height: 520px;
     background: var(--accent-color);
     border: 4px solid #000;
-    box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    z-index: 2;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
-#three-container {
-    width: 100%;
-    height: 100%;
+.checklist-section {
+    padding: 70px 30px 25px;
+    justify-content: center;
 }
 
 .checklist-instruction {
@@ -187,7 +224,7 @@ header.scrolled {
     top: 0;
     left: 0;
     right: 0;
-    background: #000;
+    background: var(--primary-color);
     color: white;
     padding: 20px;
     font-size: 1.2rem;
@@ -198,22 +235,91 @@ header.scrolled {
     text-transform: uppercase;
 }
 
-.checklist-label {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background: #000;
+.checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .checklist-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .checklist-section {
+        padding: 90px 20px 30px;
+    }
+}
+
+.checklist-item {
+    background: white;
+    border: 3px solid #000;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 12px;
+    position: relative;
+    user-select: none;
+}
+
+.checklist-item:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px #000;
+}
+
+.checklist-item.selected {
+    background: var(--primary-color);
     color: white;
-    padding: 8px 15px;
-    font-size: 1rem;
-    font-weight: 800;
-    pointer-events: none;
-    opacity: 0;
+    transform: translate(0, 0);
+    box-shadow: none;
+}
+
+.item-icon {
+    font-size: 1.8rem;
+}
+
+.item-label {
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-grow: 1;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #000;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: var(--transition);
 }
 
-.checklist-label.visible {
-    opacity: 1;
+.checklist-item.selected .checkbox {
+    background: var(--accent-color);
+    border-color: #000;
+}
+
+.checklist-item.selected .checkbox::after {
+    content: '✓';
+    color: #000;
+    font-weight: 900;
+}
+
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
 }
 
 .hero-title {
@@ -244,15 +350,27 @@ header.scrolled {
     cursor: pointer;
 }
 
-.btn-primary {
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+.btn-primary, .btn-submit {
+    background: white;
+    color: #000;
+    border: 3px solid #000 !important;
+    padding: 15px 45px;
+    font-weight: 900;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.btn-primary:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(26, 35, 126, 0.3);
+.btn-primary:hover, .btn-submit:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px #000;
+    background: white;
+    color: #000;
 }
 
 /* Comic Section */
@@ -278,10 +396,11 @@ header.scrolled {
     position: relative;
     background: white;
     padding: 20px;
-    border: 2px solid #000;
-    box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+    border: 3px solid #000;
+    box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
     overflow: hidden;
+    border-radius: 24px;
 }
 
 .comic-scene::before {
@@ -385,33 +504,53 @@ header.scrolled {
     align-items: center;
     background: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     transition: var(--transition);
-    border: 2px solid transparent;
+    border: 3px solid #000;
+    user-select: none;
+    position: relative;
+    gap: 15px;
 }
 
 .option-container:hover {
-    border-color: var(--primary-color);
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px #000;
 }
 
 .option-container input {
     display: none;
 }
 
-.option-text {
-    font-size: 1.2rem;
-    font-weight: 600;
+.option-container::after {
+    content: '';
+    width: 24px;
+    height: 24px;
+    border: 2px solid #000;
+    background: white;
+    border-radius: 4px;
+    margin-right: auto; /* Push to far side in RTL */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    font-weight: 900;
 }
 
-.option-container input:checked+.checkmark+.option-text {
-    color: var(--primary-color);
-}
-
-.btn-submit {
+.option-container:has(input:checked) {
     background: var(--primary-color);
     color: white;
-    width: 100%;
+}
+
+.option-container:has(input:checked)::after {
+    content: '✓';
+    background: var(--accent-color);
+    color: #000;
+}
+
+.option-text {
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 #survey-thanks {
@@ -475,11 +614,14 @@ footer {
     .hero-content {
         flex-direction: column;
         text-align: center;
+        gap: 40px;
     }
 
     .hero-left {
         width: 100%;
-        height: 400px;
+        max-width: 500px;
+        height: auto;
+        min-height: 500px;
     }
 }
 
@@ -577,31 +719,36 @@ footer {
 
 /* Completion Button */
 .btn-completion {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
+    grid-column: span 2;
+    background: white;
+    color: #000;
+    border: 3px solid #000;
+    padding: 15px;
     font-weight: 900;
     font-size: 1.2rem;
     cursor: pointer;
-    display: none;
     transition: var(--transition);
     z-index: 20;
-    border: 3px solid #000;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 5px;
+    width: 100%;
 }
 
 .btn-completion:hover {
-    background: var(--primary-color);
-    transform: scale(1.05);
+    background: white;
+    color: #000;
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px #000;
 }
 
-.btn-completion.visible {
-    display: block;
-    animation: fadeIn 0.5s forwards;
-
+@media (max-width: 1200px) {
+    .btn-completion {
+        grid-column: span 1;
+    }
 }
 
 /* Reveal Animation */

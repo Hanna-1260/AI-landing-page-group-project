@@ -53,13 +53,51 @@
                             <a href="#story" class="btn btn-primary">[בואו נתחיל]</a>
                         </div>
                     </div>
-                    <div class="hero-left">
-                        <div id="three-container" aria-label="חווית תלת-ממד אינטראקטיבית להכנה ליום הבחירות"></div>
+                    <div class="hero-left checklist-section">
                         <div class="checklist-instruction">
                             <p>הכנה ליום הבחירות: בחרו את הפריטים שאתם צריכים לקחת איתכם</p>
                         </div>
-                        <div id="checklist-label" class="checklist-label"></div>
-                        <button id="btn-completion" class="btn-completion">אני מוכן!</button>
+                        
+                        <div class="checklist-grid" id="checklist-grid">
+                            <!-- Checklist items -->
+                            <div class="checklist-item" data-item="bottle">
+                                <div class="item-icon">💧</div>
+                                <span class="item-label">בקבוק מים</span>
+                                <div class="checkbox"></div>
+                            </div>
+                            <div class="checklist-item" data-item="id">
+                                <div class="item-icon">🪪</div>
+                                <span class="item-label">תעודת זהות</span>
+                                <div class="checkbox"></div>
+                            </div>
+                            <div class="checklist-item" data-item="phone">
+                                <div class="item-icon">📱</div>
+                                <span class="item-label">טלפון נייד</span>
+                                <div class="checkbox"></div>
+                            </div>
+                            <div class="checklist-item" data-item="keys">
+                                <div class="item-icon">🔑</div>
+                                <span class="item-label">צרור מפתחות</span>
+                                <div class="checkbox"></div>
+                            </div>
+                            <div class="checklist-item" data-item="bag">
+                                <div class="item-icon">👜</div>
+                                <span class="item-label">תיק אישי</span>
+                                <div class="checkbox"></div>
+                            </div>
+                            <div class="checklist-item" data-item="hat">
+                                <div class="item-icon">🧢</div>
+                                <span class="item-label">כובע</span>
+                                <div class="checkbox"></div>
+                            </div>
+                            
+                            <button id="btn-completion" class="btn-completion">
+                                <span class="btn-icon">🇮🇱</span>
+                                <span class="btn-text">אני מוכן!</span>
+                            </button>
+                        </div>
+
+                        <canvas id="confetti-canvas"></canvas>
                     </div>
                 </div>
             </div>
@@ -107,7 +145,7 @@
                     </div>
                     <div class="comic-scene scene-6" data-reveal>
                         <img src="photos/scene06.jpeg" alt="סצנה 6">
-                        <div class="speech-bubble">היום יום הבחירות! הצביעו והשפיעו</div>
+                        <!-- Speech bubble removed as per request -->
                     </div>
                     <div class="comic-scene scene-7" data-reveal>
                         <img src="photos/scene07.jpeg" alt="סצנה 7">
@@ -131,17 +169,17 @@
                             <label class="option-container">
                                 <input type="radio" name="vote" value="yes">
                                 <span class="checkmark"></span>
-                                <span class="option-text">כן, בהחלט!</span>
+                                <span class="option-text">✅ כן, בהחלט!</span>
                             </label>
                             <label class="option-container">
                                 <input type="radio" name="vote" value="maybe">
                                 <span class="checkmark"></span>
-                                <span class="option-text">אני עדיין מתלבט/ת</span>
+                                <span class="option-text">🤔 אני עדיין מתלבט/ת</span>
                             </label>
                             <label class="option-container">
                                 <input type="radio" name="vote" value="no">
                                 <span class="checkmark"></span>
-                                <span class="option-text">לא, זה לא משנה</span>
+                                <span class="option-text">🤷‍♂️ לא, זה לא משנה</span>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-submit">שלח הצבעה</button>

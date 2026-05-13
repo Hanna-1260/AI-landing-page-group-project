@@ -66,182 +66,29 @@ document.addEventListener('DOMContentLoaded', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // 6. Three.js Interactive Experience
-    initThreeJS();
+    // 6. Checklist Interaction
+    initChecklist();
 });
 
-function initThreeJS() {
-    const container = document.getElementById('three-container');
-    if (!container) return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-    scene.add(ambientLight);
-
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-    dirLight.position.set(5, 10, 7);
-    scene.add(dirLight);
-
-    // Brand Colors
-    const colors = {
-        primary: 0x3661FF,
-        accent: 0xFFE14B,
-        white: 0xFFFFFF,
-        success: 0x4CAF50
-    };
-
-    // Item Definitions
-    const itemsData = [
-        { name: "בקבוק מים", type: 'bottle' },
-        { name: "טלפון נייד", type: 'phone' },
-        { name: "צרור מפתחות", type: 'keys' },
-        { name: "כובע", type: 'hat' },
-        { name: "תעודת זהות", type: 'id' },
-        { name: "תיק אישי", type: 'bag' }
-    ];
-
-    const objects = [];
-    const group = new THREE.Group();
-    scene.add(group);
-
-    // Helper to create geometries
-    function createItemMesh(type) {
-        const itemGroup = new THREE.Group();
-        let mainMesh;
-
-        switch (type) {
-            case 'bottle':
-                const body = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.8, 32), new THREE.MeshStandardMaterial({ color: colors.primary }));
-                const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.2, 32), new THREE.MeshStandardMaterial({ color: colors.white }));
-                neck.position.y = 0.5;
-                itemGroup.add(body, neck);
-                break;
-            case 'phone':
-                mainMesh = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.9, 0.05), new THREE.MeshStandardMaterial({ color: 0x222222 }));
-                const screen = new THREE.Mesh(new THREE.PlaneGeometry(0.45, 0.8), new THREE.MeshStandardMaterial({ color: colors.primary, emissive: colors.primary, emissiveIntensity: 0.2 }));
-                screen.position.z = 0.03;
-                itemGroup.add(mainMesh, screen);
-                break;
-            case 'keys':
-                const ring = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.03, 16, 100), new THREE.MeshStandardMaterial({ color: 0x222222 }));
-                const key1 = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.4, 0.02), new THREE.MeshStandardMaterial({ color: colors.primary }));
-                key1.position.y = -0.3;
-                key1.rotation.z = 0.5;
-                itemGroup.add(ring, key1);
-                break;
-            case 'hat':
-                mainMesh = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: colors.primary }));
-                const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 0.05, 32), new THREE.MeshStandardMaterial({ color: colors.primary }));
-                itemGroup.add(mainMesh, brim);
-                break;
-            case 'id':
-                mainMesh = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.4, 0.02), new THREE.MeshStandardMaterial({ color: colors.white }));
-                const idBorder = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.42, 0.01), new THREE.MeshStandardMaterial({ color: 0x000000 }));
-                idBorder.position.z = -0.01;
-                const photo = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 0.2), new THREE.MeshStandardMaterial({ color: colors.primary }));
-                photo.position.set(-0.15, 0, 0.015);
-                itemGroup.add(mainMesh, idBorder, photo);
-                break;
-            case 'bag':
-                mainMesh = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.6, 0.3), new THREE.MeshStandardMaterial({ color: colors.primary }));
-                const handle = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.03, 16, 100, Math.PI), new THREE.MeshStandardMaterial({ color: 0x222222 }));
-                handle.position.y = 0.3;
-                itemGroup.add(mainMesh, handle);
-                break;
-        }
-        return itemGroup;
-    }
-
-    // Initialize Items in a more random/dynamic way
-    itemsData.forEach((data, i) => {
-        const itemMesh = createItemMesh(data.type);
-
-        // Random distribution instead of a circle
-        itemMesh.position.set(
-            (Math.random() - 0.5) * 5,
-            (Math.random() - 0.5) * 3,
-            (Math.random() - 0.5) * 2
-        );
-
-        itemMesh.rotation.set(
-            Math.random() * Math.PI,
-            Math.random() * Math.PI,
-            Math.random() * Math.PI
-        );
-
-        itemMesh.userData = {
-            name: data.name,
-            selected: false,
-            originalPos: itemMesh.position.clone(),
-            originalRotation: itemMesh.rotation.clone()
-        };
-
-        group.add(itemMesh);
-        objects.push(itemMesh);
-    });
-
-    camera.position.z = 6;
-
-    // Interaction State
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const labelEl = document.getElementById('checklist-label');
+function initChecklist() {
+    const checklistItems = document.querySelectorAll('.checklist-item');
     const completionBtn = document.getElementById('btn-completion');
     let selectedCount = 0;
 
-    container.addEventListener('mousemove', (event) => {
-        const rect = container.getBoundingClientRect();
-        mouse.x = ((event.clientX - rect.left) / container.offsetWidth) * 2 - 1;
-        mouse.y = -((event.clientY - rect.top) / container.offsetHeight) * 2 + 1;
-
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(group.children, true);
-
-        if (intersects.length > 0) {
-            let obj = intersects[0].object;
-            while (obj.parent !== group && obj.parent !== null) obj = obj.parent;
-
-            if (!obj.userData.selected) {
-                labelEl.textContent = obj.userData.name;
-                labelEl.classList.add('visible');
-                container.style.cursor = 'pointer';
-            }
-        } else {
-            labelEl.classList.remove('visible');
-            container.style.cursor = 'default';
-        }
-    });
-
-    container.addEventListener('click', () => {
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(group.children, true);
-
-        if (intersects.length > 0) {
-            let obj = intersects[0].object;
-            while (obj.parent !== group && obj.parent !== null) obj = obj.parent;
-
-            if (!obj.userData.selected) {
-                obj.userData.selected = true;
-                selectedCount++;
-                animateSelection(obj);
-
-                // Show completion button after first item
-                if (selectedCount === 1) {
-                    completionBtn.classList.add('visible');
-                }
-            }
-        }
+    checklistItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('selected');
+            // Add a small scale animation on click
+            item.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                item.style.transform = '';
+            }, 100);
+        });
     });
 
     completionBtn.addEventListener('click', () => {
+        triggerConfetti();
+        
         const response = document.createElement('div');
         response.style.position = 'absolute';
         response.style.top = '50%';
@@ -252,75 +99,78 @@ function initThreeJS() {
         response.style.padding = '30px 60px';
         response.style.fontSize = '1.5rem';
         response.style.fontWeight = '900';
-        response.style.zIndex = '100';
+        response.style.zIndex = '200';
         response.style.textAlign = 'center';
         response.style.border = '4px solid #fff';
+        response.style.boxShadow = '20px 20px 0px rgba(0,0,0,0.3)';
         response.textContent = "מצוין! אנחנו מוכנים לשינוי 🇮🇱";
-
-        container.appendChild(response);
-
-        // Fade out completion button
+        
+        document.querySelector('.hero-left').appendChild(response);
+        
         completionBtn.classList.remove('visible');
-
+        
         setTimeout(() => {
-            response.style.transition = 'opacity 1s';
+            response.style.transition = 'opacity 1s, transform 1s';
             response.style.opacity = '0';
+            response.style.transform = 'translate(-50%, -60%)';
             setTimeout(() => response.remove(), 1000);
         }, 3000);
     });
+}
 
-    function animateSelection(obj) {
-        // Move to "ready" stack at bottom
-        const targetPos = new THREE.Vector3(-2.5 + (selectedCount * 0.8), -2, 1);
+function triggerConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
 
-        // Simple animation logic in loop
-        obj.userData.targetPos = targetPos;
-        obj.userData.animating = true;
+    let particles = [];
+    const colors = ['#3661FF', '#FFE14B', '#FF5722', '#4CAF50', '#ffffff'];
 
-        // Visual feedback
-        obj.traverse(child => {
-            if (child.material) {
-                child.material = child.material.clone();
-                child.material.emissive = new THREE.Color(0x4caf50);
-                child.material.emissiveIntensity = 0.2;
-            }
+    for (let i = 0; i < 100; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: canvas.height + Math.random() * 100,
+            r: Math.random() * 6 + 4,
+            d: Math.random() * 100,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            tilt: Math.random() * 10 - 10,
+            tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+            tiltAngle: 0
         });
     }
 
-    function animate() {
-        requestAnimationFrame(animate);
-
-        objects.forEach(obj => {
-            if (!obj.userData.selected) {
-                // Subtle floating and rotation for unselected items
-                obj.rotation.y += 0.01;
-                obj.position.y = obj.userData.originalPos.y + Math.sin(Date.now() * 0.002) * 0.1;
-            } else if (obj.userData.animating) {
-                // Smooth transition to target
-                obj.position.lerp(obj.userData.targetPos, 0.1);
-                obj.rotation.x *= 0.9;
-                obj.rotation.y *= 0.9;
-                obj.rotation.z *= 0.9;
-                obj.scale.lerp(new THREE.Vector3(0.7, 0.7, 0.7), 0.1);
-
-                if (obj.position.distanceTo(obj.userData.targetPos) < 0.01) {
-                    obj.userData.animating = false;
-                }
-            }
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+            ctx.beginPath();
+            ctx.lineWidth = p.r;
+            ctx.strokeStyle = p.color;
+            ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+            ctx.stroke();
         });
-
-        // Mouse influence on camera/group
-        group.rotation.y += (mouse.x * 0.05 - group.rotation.y) * 0.05;
-        group.rotation.x += (-mouse.y * 0.05 - group.rotation.x) * 0.05;
-
-        renderer.render(scene, camera);
+        update();
     }
 
-    animate();
+    function update() {
+        particles.forEach((p, i) => {
+            p.tiltAngle += p.tiltAngleIncremental;
+            p.y -= 3 + Math.random() * 2;
+            p.tilt = Math.sin(p.tiltAngle) * 15;
 
-    window.addEventListener('resize', () => {
-        camera.aspect = container.offsetWidth / container.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.offsetWidth, container.offsetHeight);
-    });
+            if (p.y < -10) {
+                particles[i] = null;
+            }
+        });
+        particles = particles.filter(p => p !== null);
+        if (particles.length > 0) {
+            requestAnimationFrame(draw);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    draw();
 }
