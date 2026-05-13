@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בחירות 2026 | הזכות להשפיע</title>
+    <meta name="description" content="דף נחיתה רשמי לבחירות 2026 - הצטרפו לשינוי והשפיעו על העתיד של כולנו.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="תפריט ראשי">
+            <div class="container nav-container">
+                <a href="#" class="logo" id="logo" aria-label="חזרה לראש הדף">
+                    <span class="logo-text">[בחירות]</span>
+                    <span class="logo-year">2026</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#hero">בית</a></li>
+                    <li><a href="#story">הסיפור שלנו</a></li>
+                    <li><a href="#survey">סקר</a></li>
+                </ul>
+                
+                <button class="hamburger" id="hamburger" aria-label="פתח תפריט ניווט" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero" style="position: relative; z-index: 1;">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="hero-right">
+                        <h1 class="hero-title">[כאן תופיע הכותרת הראשית]</h1>
+                        <p class="hero-subtitle">העתיד של המדינה שלנו נמצא בידיים שלכם. בואו נכתוב את הפרק הבא ביחד.</p>
+                        <div class="hero-cta">
+                            <a href="#story" class="btn btn-primary">[בואו נתחיל]</a>
+                        </div>
+                    </div>
+                    <div class="hero-left">
+                        <div id="three-container" aria-label="חווית תלת-ממד אינטראקטיבית להכנה ליום הבחירות"></div>
+                        <div class="checklist-instruction">
+                            <p>הכנה ליום הבחירות: בחרו את הפריטים שאתם צריכים לקחת איתכם</p>
+                        </div>
+                        <div id="checklist-label" class="checklist-label"></div>
+                        <button id="btn-completion" class="btn-completion">אני מוכן!</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Comic Headline Section -->
+        <section class="comic-header-section" data-reveal>
+            <div class="container">
+                <h1 class="comic-main-title">[כאן תופיע כותרת הקמפיין הראשית]</h1>
+                <div class="scroll-indicator">
+                    <span>גלו את הסיפור שלנו</span>
+                    <div class="arrow-down"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comic Storytelling Section -->
+        <section id="story" class="story">
+            <div class="container story-container">
+                <div class="comic-grid">
+                    <!-- Scenes will be generated/styled here -->
+                    <div class="comic-scene scene-0" data-reveal>
+                        <img src="photos/scene0.jpeg" alt="סצנה 0">
+                        <div class="speech-bubble">בחירות 2026 יוצאות לדרך</div>
+                    </div>
+                    <div class="comic-scene scene-1" data-reveal>
+                        <img src="photos/scene01.jpeg" alt="סצנה 1">
+                        <div class="speech-bubble">למה העבירו את החוק הזה?</div>
+                    </div>
+                    <div class="comic-scene scene-2" data-reveal>
+                        <img src="photos/scene02.jpeg" alt="סצנה 2">
+                        <div class="speech-bubble">למה הכל כל כך יקר פה?!</div>
+                    </div>
+                    <div class="comic-scene scene-3" data-reveal>
+                        <img src="photos/scene03.jpeg" alt="סצנה 3">
+                        <div class="speech-bubble">למה האוטובוס תמיד מאחר?</div>
+                    </div>
+                    <div class="comic-scene scene-4" data-reveal>
+                        <img src="photos/scene04.jpeg" alt="סצנה 4">
+                        <div class="speech-bubble">למה התור הבא כל כך רחוק?</div>
+                    </div>
+                    <div class="comic-scene scene-5" data-reveal>
+                        <img src="photos/scene05.jpeg" alt="סצנה 5">
+                        <div class="speech-bubble">חודשיים לחכות לחבילה מסין? למה שום דבר לא עובד במדינה הזאת?</div>
+                    </div>
+                    <div class="comic-scene scene-6" data-reveal>
+                        <img src="photos/scene06.jpeg" alt="סצנה 6">
+                        <div class="speech-bubble">היום יום הבחירות! הצביעו והשפיעו</div>
+                    </div>
+                    <div class="comic-scene scene-7" data-reveal>
+                        <img src="photos/scene07.jpeg" alt="סצנה 7">
+                        <div class="speech-bubble">איזה כיף יום חופש!</div>
+                    </div>
+                    <div class="comic-scene scene-8 scene-large" data-reveal>
+                        <img src="photos/scene08.jpeg" alt="סצנה 8">
+                        <!-- No bubble for scene 8 as per content.txt -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Survey Section -->
+        <section id="survey" class="survey" data-reveal>
+            <div class="container survey-container">
+                <div class="survey-card">
+                    <h2 class="survey-question">האם השתכנעת ללכת להצביע?</h2>
+                    <form id="survey-form">
+                        <div class="survey-options">
+                            <label class="option-container">
+                                <input type="radio" name="vote" value="yes">
+                                <span class="checkmark"></span>
+                                <span class="option-text">כן, בהחלט!</span>
+                            </label>
+                            <label class="option-container">
+                                <input type="radio" name="vote" value="maybe">
+                                <span class="checkmark"></span>
+                                <span class="option-text">אני עדיין מתלבט/ת</span>
+                            </label>
+                            <label class="option-container">
+                                <input type="radio" name="vote" value="no">
+                                <span class="checkmark"></span>
+                                <span class="option-text">לא, זה לא משנה</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-submit">שלח הצבעה</button>
+                    </form>
+                    <div id="survey-thanks" class="hidden">
+                        <h3>[תודה על השתתפותך]</h3>
+                        <p>הקול שלך הוא הכוח שלך לשינוי.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Large Headline Section -->
+        <section class="dramatic-headline" data-reveal>
+            <div class="container">
+                <h2 class="large-title">[כאן תופיע כותרת גדולה נוספת]</h2>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer">
+        <div class="container footer-container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">[בחירות]</span>
+                    <span class="logo-year">2026</span>
+                </div>
+                <p class="footer-copy">© 2026 כל הזכויות שמורות למטה הבחירות הלאומי.</p>
+                <p class="footer-legal">הודעה זו מוגשת מטעם ועדת הבחירות המרכזית (לדוגמה).</p>
+                <div class="footer-socials">
+                    <!-- Placeholder icons -->
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
