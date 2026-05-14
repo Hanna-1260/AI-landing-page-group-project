@@ -727,6 +727,24 @@ footer {
         height: auto;
         min-height: 500px;
     }
+
+    /* Responsive Spacing & Width Fix for Checklist Section */
+    .checklist-section {
+        padding: 0; /* Reset all padding to allow header to stretch full width */
+        padding-bottom: 30px; /* Maintain bottom breathing room */
+    }
+
+    .checklist-instruction {
+        position: relative;
+        width: 100%;
+        margin-bottom: 25px; /* Vertical spacing between header and items */
+        border-radius: 0; /* Banner-style header connected to card */
+    }
+
+    .checklist-grid {
+        padding: 0 25px; /* Side padding for items only */
+        gap: 15px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1003,7 +1021,9 @@ footer {
         position: relative;
         padding: 15px;
         font-size: 1rem;
-        margin-bottom: 15px;
+        margin-bottom: 20px; 
+        width: 100%;
+        border-radius: 0;
     }
 
     .checklist-grid {
