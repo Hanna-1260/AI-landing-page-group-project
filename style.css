@@ -157,6 +157,18 @@ header.scrolled {
     transition: var(--transition);
 }
 
+.hamburger.open span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
 /* Hero Section */
 .hero {
     min-height: 100vh;
@@ -754,6 +766,35 @@ footer {
 
     .hamburger {
         display: flex;
+        z-index: 1001;
+    }
+
+    .nav-links.active {
+        display: flex !important;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: white;
+        padding: 40px 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        border-bottom: 2px solid var(--primary-color);
+        z-index: 1000;
+        gap: 25px;
+        align-items: center;
+        animation: slideDown 0.3s ease-out forwards;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .comic-grid {
@@ -786,21 +827,21 @@ footer {
         aspect-ratio: 4 / 3;
     }
 
-    /* Speech Bubble Mobile Adjustments - Extreme Small */
+    /* Speech Bubble Mobile Adjustments - Improved Readability & Spacing */
     .speech-bubble {
-        top: 15px;
-        right: 15px;
-        padding: 5px 8px;
-        font-size: 0.65rem;
-        max-width: 55%;
-        box-shadow: 2px 2px 0px var(--primary-color);
+        top: 25px; /* Added breathing room from edges */
+        right: 25px;
+        padding: 12px 18px;
+        font-size: 0.85rem;
+        max-width: 70%;
+        box-shadow: 4px 4px 0px var(--primary-color);
     }
 
     .scene-0 .speech-bubble,
     .scene-1 .speech-bubble {
-        left: 15px;
+        left: 25px;
         right: auto;
-        box-shadow: -2px 2px 0px var(--primary-color);
+        box-shadow: -4px 4px 0px var(--primary-color);
     }
 
     .hero-title {

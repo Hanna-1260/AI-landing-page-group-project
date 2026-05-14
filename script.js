@@ -16,27 +16,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 2. Hamburger Menu Toggle
+    // 2. Hamburger Menu Toggle & Responsive Reset
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
 
-    hamburger.addEventListener('click', () => {
+    const closeMenu = () => {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    };
+
+    const toggleMenu = () => {
         const isOpen = navLinks.classList.toggle('active');
         hamburger.classList.toggle('open');
         hamburger.setAttribute('aria-expanded', isOpen);
+    };
 
-        if (isOpen) {
-            navLinks.style.display = 'flex';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '80px';
-            navLinks.style.left = '0';
-            navLinks.style.width = '100%';
-            navLinks.style.background = 'white';
-            navLinks.style.padding = '20px';
-            navLinks.style.boxShadow = '0 10px 10px rgba(0,0,0,0.1)';
-        } else {
-            navLinks.style.display = '';
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Reset menu state on window resize (mobile -> desktop)
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            closeMenu();
         }
     });
 
