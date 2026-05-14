@@ -222,7 +222,8 @@ header.scrolled {
 .hero-left {
     flex: 1;
     position: relative;
-    height: 520px;
+    min-height: 520px;
+    height: auto;
     background: var(--accent-color);
     border: 4px solid #000;
     box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.2);
@@ -234,15 +235,14 @@ header.scrolled {
 }
 
 .checklist-section {
-    padding: 70px 30px 25px;
-    justify-content: center;
+    padding: 0 0 25px 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .checklist-instruction {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    width: 100%;
     background: var(--primary-color);
     color: white;
     padding: 20px;
@@ -252,6 +252,7 @@ header.scrolled {
     pointer-events: none;
     text-align: center;
     text-transform: uppercase;
+    margin-bottom: 30px; /* Consistent base spacing */
 }
 
 .checklist-grid {
@@ -259,16 +260,18 @@ header.scrolled {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     width: 100%;
+    padding: 0 30px; /* Side padding moved to grid for full-width header */
 }
 
 @media (max-width: 1200px) {
     .checklist-grid {
         grid-template-columns: 1fr;
         gap: 10px;
+        padding: 0 20px;
     }
 
     .checklist-section {
-        padding: 90px 20px 30px;
+        padding: 0 0 30px 0;
     }
 }
 
@@ -728,21 +731,18 @@ footer {
         min-height: 500px;
     }
 
-    /* Responsive Spacing & Width Fix for Checklist Section */
+    /* Consistent Spacing & Width for Checklist Section */
     .checklist-section {
-        padding: 0; /* Reset all padding to allow header to stretch full width */
-        padding-bottom: 30px; /* Maintain bottom breathing room */
+        padding: 0 0 30px 0;
     }
 
     .checklist-instruction {
-        position: relative;
-        width: 100%;
-        margin-bottom: 25px; /* Vertical spacing between header and items */
-        border-radius: 0; /* Banner-style header connected to card */
+        margin-bottom: 25px; /* Scaled breathing room */
+        border-radius: 0;
     }
 
     .checklist-grid {
-        padding: 0 25px; /* Side padding for items only */
+        padding: 0 25px;
         gap: 15px;
     }
 }
@@ -1012,17 +1012,15 @@ footer {
     }
 
     .checklist-section {
-        padding: 0; /* Let internal items handle spacing */
+        padding: 0 0 20px 0;
         display: flex;
         flex-direction: column;
     }
 
     .checklist-instruction {
-        position: relative;
         padding: 15px;
         font-size: 1rem;
         margin-bottom: 20px; 
-        width: 100%;
         border-radius: 0;
     }
 
