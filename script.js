@@ -1,3 +1,10 @@
+// Force page to always load at the top
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+window.scrollTo(0, 0);
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Navigation Scroll Effect
     const header = document.getElementById('header');
@@ -52,9 +59,34 @@ document.addEventListener('DOMContentLoaded', () => {
     surveyForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const selectedOption = surveyForm.querySelector('input[name="vote"]:checked');
+        
         if (selectedOption) {
-            surveyForm.classList.add('hidden');
-            surveyThanks.classList.remove('hidden');
+            // Trigger results state
+            surveyForm.classList.add('show-results');
+            
+            // Mark the user's choice
+            const selectedContainer = selectedOption.closest('.option-container');
+            if (selectedContainer) {
+                selectedContainer.classList.add('user-choice');
+            }
+            
+            // Animate each bar based on data-percent
+            const options = surveyForm.querySelectorAll('.option-container');
+            options.forEach(option => {
+                const percent = option.getAttribute('data-percent');
+                const fill = option.querySelector('.result-fill');
+                
+                // Small timeout to ensure CSS transition triggers properly after class add
+                setTimeout(() => {
+                    fill.style.width = percent + '%';
+                }, 100);
+            });
+
+            // Show thanks message after animation starts
+            setTimeout(() => {
+                surveyThanks.classList.remove('hidden');
+            }, 1000);
+            
         } else {
             alert('אנא בחר אחת מהאפשרויות');
         }

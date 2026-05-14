@@ -14,7 +14,7 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Typography */
-    --font-main: 'Assistant', sans-serif;
+    --font-main: 'Heebo', sans-serif;
     --font-heading: 'Heebo', sans-serif;
 }
 
@@ -472,6 +472,7 @@ header.scrolled {
     border-radius: 12px 12px 12px 0;
     font-weight: 800;
     font-size: 1.1rem;
+    line-height: 1.6;
     max-width: 80%;
     box-shadow: 6px 6px 0px var(--primary-color);
     border: 3px solid #000;
@@ -522,6 +523,7 @@ header.scrolled {
 .survey-question {
     font-family: var(--font-heading);
     font-size: 2.5rem;
+    font-weight: 900;
     margin-bottom: 30px;
     color: var(--primary-color);
 }
@@ -577,6 +579,18 @@ header.scrolled {
     color: white;
 }
 
+/* Override selection background in result state */
+.show-results .option-container:has(input:checked) {
+    background: white;
+    color: var(--text-color);
+}
+
+/* Add border to indicate user choice in result state */
+.show-results .option-container.user-choice {
+    border-color: var(--primary-color);
+    border-width: 4px;
+}
+
 .option-container:has(input:checked)::after {
     content: '✓';
     background: var(--accent-color);
@@ -586,6 +600,61 @@ header.scrolled {
 .option-text {
     font-size: 1.2rem;
     font-weight: 700;
+    position: relative;
+    z-index: 2;
+}
+
+.checkmark {
+    position: relative;
+    z-index: 2;
+}
+
+.result-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: var(--primary-color);
+    opacity: 0.15; /* Slightly lighter for better contrast */
+    transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 1;
+    border-radius: 9px;
+}
+
+.percentage-value {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+/* Results State */
+.show-results .option-container {
+    pointer-events: none;
+    cursor: default;
+}
+
+.show-results .percentage-value {
+    opacity: 1;
+}
+
+.show-results .option-container::after {
+    display: none; /* Hide the checkmark box in result state */
+}
+
+.show-results .checkmark {
+    display: none;
+}
+
+.show-results .btn-submit {
+    display: none;
 }
 
 #survey-thanks {
@@ -663,7 +732,6 @@ footer {
 @media (max-width: 768px) {
     .nav-links {
         display: none;
-        /* In JS we will handle hamburger menu */
     }
 
     .hamburger {
@@ -672,10 +740,49 @@ footer {
 
     .comic-grid {
         grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .comic-scene {
+        padding: 15px;
+        border-radius: 20px;
+        /* Ensure uniform area */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .comic-scene img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover; /* Use cover but with controlled aspect ratio to feel uniform */
+        border-radius: 10px;
     }
 
     .scene-large {
         grid-column: span 1;
+    }
+
+    .scene-large img {
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    /* Speech Bubble Mobile Adjustments - Extreme Small */
+    .speech-bubble {
+        top: 15px;
+        right: 15px;
+        padding: 5px 8px;
+        font-size: 0.65rem;
+        max-width: 55%;
+        box-shadow: 2px 2px 0px var(--primary-color);
+    }
+
+    .scene-0 .speech-bubble,
+    .scene-1 .speech-bubble {
+        left: 15px;
+        right: auto;
+        box-shadow: -2px 2px 0px var(--primary-color);
     }
 
     .hero-title {
@@ -821,4 +928,112 @@ footer {
 .fotter-link:hover {
     color: var(--accent-color);
     text-decoration: underline;
+}
+
+/* Global Mobile Typography Scaling (excluding speech bubbles) */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+    }
+
+    .btn-primary,
+    .btn-submit {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    .comic-main-title {
+        font-size: 2rem;
+    }
+
+    .large-title {
+        font-size: 2rem;
+    }
+
+    .survey-question {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .option-text {
+        font-size: 1rem;
+    }
+
+    .percentage-value {
+        font-size: 1rem;
+        left: 15px;
+    }
+
+    .option-container {
+        padding: 15px;
+    }
+
+    .logo-text {
+        font-size: 1.2rem;
+    }
+
+    .logo-year {
+        font-size: 1rem;
+    }
+
+    .footer-logo .logo-text {
+        font-size: 1.2rem;
+    }
+
+    /* Hero Checklist Scaling & Layout Fixes */
+    .hero-left {
+        height: auto;
+        min-height: auto;
+        padding-bottom: 20px;
+    }
+
+    .checklist-section {
+        padding: 0; /* Let internal items handle spacing */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checklist-instruction {
+        position: relative;
+        padding: 15px;
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .checklist-grid {
+        padding: 0 15px;
+        gap: 8px;
+    }
+
+    .checklist-item {
+        padding: 10px;
+        gap: 10px;
+        border-radius: 10px;
+    }
+
+    .item-icon {
+        font-size: 1.4rem;
+    }
+
+    .item-label {
+        font-size: 0.95rem;
+    }
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn-completion {
+        margin: 15px;
+        width: calc(100% - 30px);
+        font-size: 1rem;
+        padding: 12px;
+    }
 }

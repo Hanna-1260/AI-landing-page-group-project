@@ -10,8 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@300;400;700;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap"
         rel="stylesheet">
 
     <!-- Three.js -->
@@ -33,7 +32,10 @@
                 <ul class="nav-links">
                     <!-- <li><a href="#hero">בית</a></li> -->
                     <li><a href="#comic-header-section">הסיפור שלנו</a></li>
+                    <li><a href="#dramatic-headline">חובת ההצבעה</a></li>
                     <li><a href="#survey">סקר</a></li>
+                    <li><a href="#footer">אודות</a></li>
+
                 </ul>
 
                 <button class="hamburger" id="hamburger" aria-label="פתח תפריט ניווט" aria-expanded="false">
@@ -52,7 +54,8 @@
                 <div class="hero-content">
                     <div class="hero-right">
                         <h1 class="hero-title">הקול שלכם הוא יותר מפתק בתיבה </h1>
-                        <p class="hero-subtitle">העתיד של המדינה שלנו נמצא בידיים שלכם. בואו נכתוב את הפרק הבא ביחד.</p>
+                        <p class="hero-subtitle">העתיד של המדינה שלנו נמצא בידיים שלכם.<br>בואו נכתוב את הפרק הבא ביחד.
+                        </p>
                         <div class="hero-cta">
                             <a href="#comic-header-section" class="btn btn-primary">הסיפור של כולנו</a>
                         </div>
@@ -171,7 +174,7 @@
         </section>
 
         <!-- Large Headline Section -->
-        <section class="dramatic-headline" data-reveal>
+        <section class="dramatic-headline" id="dramatic-headline" data-reveal>
             <div class="container">
                 <h2 class="large-title">להצביע זו לא זכות, <br> זו חובה.</h2>
             </div>
@@ -184,27 +187,33 @@
                     <h2 class="survey-question">האם השתכנעת ללכת להצביע?</h2>
                     <form id="survey-form">
                         <div class="survey-options">
-                            <label class="option-container" tabindex="0">
+                            <label class="option-container" tabindex="0" data-percent="83">
                                 <input type="radio" name="vote" value="yes">
                                 <span class="checkmark"></span>
                                 <span class="option-text">✅ כן, בהחלט!</span>
+                                <div class="result-fill"></div>
+                                <span class="percentage-value">83%</span>
                             </label>
-                            <label class="option-container" tabindex="0">
+                            <label class="option-container" tabindex="0" data-percent="11">
                                 <input type="radio" name="vote" value="maybe">
                                 <span class="checkmark"></span>
                                 <span class="option-text">🤔 אני עדיין מתלבט/ת</span>
+                                <div class="result-fill"></div>
+                                <span class="percentage-value">11%</span>
                             </label>
-                            <label class="option-container" tabindex="0">
+                            <label class="option-container" tabindex="0" data-percent="6">
                                 <input type="radio" name="vote" value="no">
                                 <span class="checkmark"></span>
                                 <span class="option-text">🤷‍♂️ לא, זה לא משנה</span>
+                                <div class="result-fill"></div>
+                                <span class="percentage-value">6%</span>
                             </label>
                         </div>
                         <button type="submit" class="btn btn-submit">שלח הצבעה</button>
                     </form>
                     <div id="survey-thanks" class="hidden">
                         <h3>תודה על השתתפותך</h3>
-                        <p>הקול שלך הוא הכוח שלך לשינוי.</p>
+                        <p>הקול שלך הוא הכוח שלך לשינוי</p>
                     </div>
                 </div>
             </div>
@@ -221,7 +230,7 @@
                 <p>
                     נוצר על ידי: חני פלולי, ליה מורדוך ורעות רון<br>
                     פרויקט כחלק מקורס פיתוח אתרי אינטרנט<br>
-                    הפקולטה לטכנולוגיות למידה המכון הטכנולוגי חולון HIT<br>
+                    הפקולטה לטכנולוגיות למידה, המכון הטכנולוגי חולון HIT<br>
                     &copy; כל הזכויות שמורות
                 </p>
                 <a href="https://bechirot.gov.il" target="_blank" rel="noopener noreferrer" class="fotter-link">לאתר
