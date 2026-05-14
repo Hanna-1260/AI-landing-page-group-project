@@ -76,13 +76,33 @@ function initChecklist() {
     let selectedCount = 0;
 
     checklistItems.forEach(item => {
-        item.addEventListener('click', () => {
+        const toggleItem = () => {
             item.classList.toggle('selected');
-            // Add a small scale animation on click
             item.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 item.style.transform = '';
             }, 100);
+        };
+
+        item.addEventListener('click', toggleItem);
+        
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleItem();
+            }
+        });
+    });
+
+    const surveyOptions = document.querySelectorAll('.option-container');
+    surveyOptions.forEach(option => {
+        option.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const input = option.querySelector('input');
+                input.checked = true;
+                // Manually trigger change if needed or just styling
+            }
         });
     });
 

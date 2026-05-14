@@ -24,6 +24,18 @@
     box-sizing: border-box;
 }
 
+*:focus-visible {
+    outline: 4px solid var(--primary-color);
+    outline-offset: 4px;
+}
+
+.checklist-item:focus-visible,
+.comic-scene:focus-visible,
+.option-container:focus-visible {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0px #000;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -70,6 +82,7 @@ header.scrolled {
 .nav-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 60px;
 }
 
@@ -170,8 +183,13 @@ header.scrolled {
 }
 
 @keyframes patternMove {
-    from { background-position: 0 0; }
-    to { background-position: 500px 500px; }
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 500px 500px;
+    }
 }
 
 .hero::after {
@@ -186,6 +204,7 @@ header.scrolled {
     z-index: 0;
     filter: blur(80px);
 }
+
 .hero-content {
     display: flex;
     align-items: center;
@@ -247,7 +266,7 @@ header.scrolled {
         grid-template-columns: 1fr;
         gap: 10px;
     }
-    
+
     .checklist-section {
         padding: 90px 20px 30px;
     }
@@ -350,13 +369,16 @@ header.scrolled {
     cursor: pointer;
 }
 
-.btn-primary, .btn-submit {
-    background: white;
+.btn-primary,
+.btn-submit {
+    background: var(--accent-color);
     color: #000;
     border: 3px solid #000 !important;
-    padding: 15px 45px;
+    padding: 18px 60px;
+    /* Slightly larger padding for scale */
     font-weight: 900;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    /* Slightly larger font */
     border-radius: 12px;
     box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
     transition: var(--transition);
@@ -364,13 +386,15 @@ header.scrolled {
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    font-family: var(--font-main);
 }
 
-.btn-primary:hover, .btn-submit:hover {
+.btn-primary:hover,
+.btn-submit:hover {
     transform: translate(-4px, -4px);
     box-shadow: 4px 4px 0px #000;
-    background: white;
-    color: #000;
+    background: var(--primary-color);
+    color: white;
 }
 
 /* Comic Section */
@@ -455,7 +479,17 @@ header.scrolled {
     transform: scale(0.8) translateY(20px);
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 5;
-    text-align: center;
+    text-align: right;
+}
+
+.scene-0 .speech-bubble,
+.scene-1 .speech-bubble {
+    right: auto;
+    left: 40px;
+    max-width: 280px;
+    width: fit-content;
+    border-radius: 12px 12px 0 12px;
+    box-shadow: -6px 6px 0px var(--primary-color);
 }
 
 .speech-bubble::after {
@@ -529,7 +563,8 @@ header.scrolled {
     border: 2px solid #000;
     background: white;
     border-radius: 4px;
-    margin-right: auto; /* Push to far side in RTL */
+    margin-right: auto;
+    /* Push to far side in RTL */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -736,6 +771,7 @@ footer {
     gap: 15px;
     margin-top: 5px;
     width: 100%;
+    font-family: var(--font-main);
 }
 
 .btn-completion:hover {
@@ -775,4 +811,14 @@ footer {
         opacity: 1 !important;
         transform: none !important;
     }
+}
+
+.fotter-link {
+    color: white;
+    text-decoration: none;
+}
+
+.fotter-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
